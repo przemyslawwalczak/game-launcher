@@ -1,6 +1,1 @@
-set APPLICATION=%cd%
-cd ./node_modules/electron/dist
-cls
-electron "%APPLICATION%/source"
-cd %APPLICATION%
-cls
+"%cd%/node_modules/electron/dist/electron.exe" ./source

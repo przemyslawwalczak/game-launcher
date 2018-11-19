@@ -1,9 +1,11 @@
 {
-  "name": "terminated-games-launcher",
+  "name": "terminated-games-launcher-elemental",
   "version": "0.0.1",
   "description": "",
-  "scripts": {
-  },
+  "scripts": {},
   "author": "Przemyslaw Walczak",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^3.0.9"
+  }
 }
