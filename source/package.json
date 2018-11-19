@@ -1,0 +1,11 @@
+{
+  "name": "terminated-games-launcher",
+  "version": "0.0.1",
+  "description": "",
+  "main": "application.js",
+  "scripts": {
+    "start": "/node_modules/electron/dist/electron ."
+  },
+  "author": "Przemyslaw Walczak",
+  "license": "ISC"
+}
