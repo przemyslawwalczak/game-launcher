@@ -6,23 +6,16 @@ class Boot {
   constructor() {
     console.log('Booting application')
 
+    Events.all('electron-ready', 'templates', 'assets')
+    .then(() => {
+      new Window('main')
+      .then(window => {
 
-    console.log(Window)
-
-    app.on('ready', async () => {
-      let window = await new Window('main')
-
-      console.log(window)
+      })
+      .catch(e => {
+        console.log(e)
+      })
     })
-
-    //
-    // Events.all('application', 'assets')
-    // .then(() => {
-    //   console.log('all ready')
-    // })
-    // .catch(e => {
-    //
-    // })
   }
 }
 

@@ -1,21 +1,42 @@
 const Application = require('application')
 const Attributes = require('application/attributes')
+const Templates = require('application/templates')
+const Assets = require('application/assets')
 const Path = require('path')
 
 const { BrowserWindow } = require('electron')
+const Mustache = require('mustache')
 
-console.log(Application)
+const fs = require('fs')
+const querystring = require('querystring')
 
-class Window {
-  constructor(name) {
-    this.attributes = new Attributes(Path.join('windows', name + '.yaml'), Application.attributes)
-    this.instance = new BrowserWindow(this.attributes)
+class Window extends BrowserWindow {
+  constructor(name, parent = null) {
+    let attributes = new Attributes(Path.join('windows', name + '.yaml'), null || Application.attributes)
 
-    this.instance.loadURL('data:text/html,%3Ch1%3EHello%2C%20World!%3C%2Fh1%3E')
+    attributes.parent = parent
 
-    return new Promise((resolve, reject) => {
-      this.instance.on('ready-to-show', () => {
-        this.instance.show()
+    super(attributes)
+
+    this.attributes = attributes
+
+    this.template = Templates.get(attributes.template || name)
+
+    this.view = {}
+
+    this.view.attribute = this.attributes
+
+    this.result = Mustache.render(this.template, this.view, Templates.partials)
+
+    this.contents = this.webContents
+
+    this.loadURL('data:text/html,' + querystring.escape(this.result))
+
+    return new Promise((resolve) => {
+      this.once('ready-to-show', () => {
+        this.contents.insertCSS(Assets.table[attributes.css].toString())
+        this.show()
+        this.focus()
         resolve(this)
       })
     })

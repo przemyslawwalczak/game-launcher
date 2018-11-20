@@ -1,6 +1,8 @@
-width: 1248
-height: 620
+width: 1200
+height: 600
 # icon: ???
-frame: false
+frame: true
 title: Terminated Games
 show: false
+backgroundColor: '#1e1a25'
+css: style/base.scss

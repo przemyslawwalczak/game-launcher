@@ -13,9 +13,7 @@ class Electron {
     })
 
     app.on('activate', () => {
-      // if (win === null) {
-      //   createWindow()
-      // }
+      Events.emit('electron-ready')
     })
   }
 }

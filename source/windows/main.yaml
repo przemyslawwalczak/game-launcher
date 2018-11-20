@@ -1,5 +1,5 @@
-width: 800
-height: 600
+# width: 800
+# height: 600
 
 # width Integer (optional) - Window's width in pixels. Default is 800.
 # height Integer (optional) - Window's height in pixels. Default is 600.

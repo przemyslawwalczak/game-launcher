@@ -19,6 +19,8 @@ class Events extends EventEmitter {
       }
     })
   }
+
+  // TODO: Add promise error handler
 }
 
 module.exports = new Events
