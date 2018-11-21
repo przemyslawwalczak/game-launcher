@@ -25,6 +25,7 @@ class Window extends BrowserWindow {
     this.view = {}
 
     this.view.attribute = this.attributes
+    this.view.cwd = process.env.cwd
 
     this.result = Mustache.render(this.template, this.view, Templates.partials)
 

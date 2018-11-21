@@ -1,1 +1,1 @@
-"%cd%/node_modules/electron/dist/electron.exe" ./source
+"%cd%/node_modules/electron/dist/electron.exe" .

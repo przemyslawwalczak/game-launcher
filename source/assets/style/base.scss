@@ -1,3 +1,18 @@
+@import 'fonts';
+
 body {
   color: white;
+  font-family: 'Roboto';
+  background: url('./assets/anrinch-entertainment.png')
+}
+
+header {
+  -webkit-app-region: drag;
+  display: flex;
+
+  img {
+    -webkit-app-region: drag;
+    width: 120px;
+    height: 100%;
+  }
 }
