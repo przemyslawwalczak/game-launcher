@@ -5,6 +5,3 @@ frame: true
 title: Terminated Games
 show: false
 backgroundColor: '#1e1a25'
-css: style/base.scss
-webPreferences:
-  webSecurity: false

@@ -2,6 +2,9 @@ const fs = require('fs')
 const Path = require('path')
 
 const Util = require('application/util')
+const Templates = require('application/templates')
+const Windows = require('application/windows')
+
 const sass = require('sass')
 
 const ExtensionHandler = {}
@@ -9,37 +12,68 @@ const ExtensionHandler = {}
 ExtensionHandler['.scss'] = (filename) => {
   return sass.renderSync({
     file: filename
-  }).css
+  }).css.toString()
 }
 
-class Assets {
-  constructor() {
-    console.log('Constructing assets')
+ExtensionHandler['.css'] = (filename) => {
+  return fs.readFileSync(filename, 'utf8')
+}
 
-    this.table = {}
-    this.directory = Path.join(process.env.cwd, 'assets')
+const express = require('express')
+const http = require('http')
+const application = express()
 
-    Util.recursively(this.directory)
-    .then(async files => {
-      for (let file of files) {
-        let extension = Path.parse(file).ext
+const server = http.createServer(application)
 
-        let handler = ExtensionHandler[extension]
-        let name = file.replace(Path.join(this.directory, Path.sep), '').replace(/\\/g, '/')
+application.use('/static/style', (request, response) => {
+  let name = request.url.substring(1)
 
-        if (handler) {
-          this.table[name] = handler(file)
-        } else {
-          this.table[name] = await Util.tobuffer(file)
-        }
-      }
+  let filename = Path.parse(name)
 
-      Events.emit('assets')
-    })
-    .catch(e => {
-      console.log('Assets e:', e)
-    })
+  let handler = ExtensionHandler[filename.ext]
+
+  if (!handler) {
+    throw new Error(`should we handle '${filename.ext}'?`)
   }
-}
 
-module.exports = new Assets
+  let result = handler(Path.join(process.env.cwd, 'assets', 'style', filename.dir, filename.base))
+
+  response.status(200).end(result)
+})
+
+application.use('/static', express.static('assets'))
+
+const Mustache = require('mustache')
+
+let templates = express.Router()
+
+templates.use((request, response) => {
+  let name = request.url.substring(1)
+
+  let window = Windows.reference[request.query.reference]
+
+  if (!window) {
+    throw new Error('We got no window to display, as this should crash our application')
+  }
+
+  let template = Templates.get(window.template)
+
+  if (!template) {
+    throw new Error('template not found for window')
+  }
+
+  response.status(200).end(Mustache.render(template, window.view, Templates.partials))
+})
+
+application.use('/template', templates)
+
+server.listen(null, 'localhost', () => {
+  let address = server.address()
+
+  console.log('Assets listening on:', address)
+
+  module.exports.address = address.address
+  module.exports.port = address.port
+
+  Events.emit('assets')
+})

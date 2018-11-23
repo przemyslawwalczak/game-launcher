@@ -9,9 +9,12 @@
   "author": "Przemyslaw Walczak",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.16.4",
     "js-yaml": "^3.12.0",
     "lodash": "^4.17.11",
     "mustache": "^3.0.1",
-    "sass": "^1.15.1"
+    "node-persist": "^3.0.1",
+    "sass": "^1.15.1",
+    "uuid": "^3.3.2"
   }
 }

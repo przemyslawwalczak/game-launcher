@@ -1,4 +1,3 @@
-const Mustache = require('mustache')
 const Path = require('path')
 const Util = require('application/util')
 const fs = require('fs')

@@ -1,6 +1,9 @@
 # width: 800
 # height: 600
 
+use state: true
+center: false
+
 # width Integer (optional) - Window's width in pixels. Default is 800.
 # height Integer (optional) - Window's height in pixels. Default is 600.
 # x Integer (optional) (required if y is used) - Window's left offset from screen. Default is to center the window.

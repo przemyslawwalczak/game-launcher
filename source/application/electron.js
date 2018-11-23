@@ -1,4 +1,5 @@
 const { app } = require('electron')
+const Windows = require('application/windows')
 
 class Electron {
   constructor() {
@@ -7,7 +8,11 @@ class Electron {
     })
 
     app.on('window-all-closed', () => {
-      if (process.platform !== 'darwin') {
+      if (Windows.locked) {
+        Events.once('windows-state-stored', () => {
+          app.quit()
+        })
+      } else {
         app.quit()
       }
     })

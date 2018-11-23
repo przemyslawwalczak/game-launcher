@@ -15,6 +15,9 @@ Module.prototype.require = function require (...path) {
 
 require('application/globals')
 
+require('application/assets')
+require('application/templates')
+
 require('application/variables')
 require('application/assets')
 require('application/windows')
